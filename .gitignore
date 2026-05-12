@@ -1,0 +1,10 @@
+# Ignore the actual .env file so credentials aren't pushed to GitHub
+.env
+
+# Ignore IDE specific folders
+.vscode/
+.idea/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

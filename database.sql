@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS intellisum;
+USE intellisum;
+
+CREATE TABLE IF NOT EXISTS summaries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    original_text LONGTEXT NOT NULL,
+    summary_text LONGTEXT NOT NULL,
+    summary_type VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
