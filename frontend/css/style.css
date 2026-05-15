@@ -221,6 +221,20 @@ body {
     color: var(--text-primary);
 }
 
+.danger-btn {
+    color: #f87171;
+}
+
+.danger-btn:hover {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+}
+
+.danger-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .panel-body {
     flex: 1;
     display: flex;
@@ -535,6 +549,8 @@ textarea::placeholder {
 
 .history-meta {
     display: flex;
+    align-items: center;
+    gap: 0.75rem;
     justify-content: space-between;
     font-size: 0.75rem;
     color: var(--text-muted);
@@ -555,4 +571,111 @@ textarea::placeholder {
     font-size: 0.95rem;
     color: var(--text-primary);
     line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        align-items: stretch;
+        overflow: auto;
+    }
+
+    .app-container {
+        min-height: 100vh;
+        height: auto;
+        flex-direction: column;
+        border: none;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 1rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        gap: 1rem;
+    }
+
+    .brand {
+        margin-bottom: 0;
+    }
+
+    .nav-menu {
+        flex: none;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+    }
+
+    .nav-menu a {
+        white-space: nowrap;
+    }
+
+    .model-info {
+        display: none;
+    }
+
+    .main-area {
+        padding: 1rem;
+    }
+
+    .workspace {
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+    }
+
+    .panel {
+        min-height: 420px;
+    }
+
+    .history-body {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 600px) {
+    .top-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .top-header p {
+        font-size: 0.85rem;
+    }
+
+    .panel-header,
+    .panel-footer,
+    .url-fetcher {
+        padding: 0.85rem;
+    }
+
+    .url-fetcher {
+        flex-direction: column;
+    }
+
+    .panel-footer {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .history-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .history-meta .delete-history-btn {
+        align-self: flex-end;
+    }
+
+    .modal {
+        width: calc(100% - 2rem);
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
 }

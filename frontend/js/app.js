@@ -214,6 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="history-meta">
                                 <span><i class="ph-fill ph-tag"></i> Type: ${record.summary_type}</span>
                                 <span><i class="ph ph-calendar"></i> ${date}</span>
+                                <button class="icon-btn danger-btn delete-history-btn" data-id="${record.id}" title="Delete history record">
+                                    <i class="ph ph-trash"></i>
+                                </button>
                             </div>
                             <div class="history-preview">"${record.preview}..."</div>
                             <div class="history-summary">${parseMarkdown(record.summary_text)}</div>
@@ -228,6 +231,41 @@ document.addEventListener('DOMContentLoaded', () => {
             historyContainer.innerHTML = `<div class="empty-state" style="color: #ef4444;"><p>Failed to load history: ${error.message}</p></div>`;
         }
     }
+
+    historyContainer.addEventListener('click', async (e) => {
+        const deleteBtn = e.target.closest('.delete-history-btn');
+        if (!deleteBtn) return;
+
+        const id = Number(deleteBtn.dataset.id);
+        if (!id || !confirm('Delete this history record?')) return;
+
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i>';
+
+        try {
+            const response = await fetch('api.php?action=delete_history', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            });
+            const data = await response.json();
+
+            if (data.status !== 'success') {
+                throw new Error(data.message);
+            }
+
+            deleteBtn.closest('.history-item').remove();
+
+            if (!historyContainer.querySelector('.history-item')) {
+                historyContainer.innerHTML = '<div class="empty-state"><i class="ph ph-clock"></i><p>No summary history found.</p></div>';
+            }
+        } catch (error) {
+            console.error('Delete history error:', error);
+            alert(`Could not delete history record. Error: ${error.message}`);
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="ph ph-trash"></i>';
+        }
+    });
 
     // --- NÚT COPY ĐÃ ĐƯỢC SỬA LỖI ---
     copyBtn.addEventListener('click', () => {

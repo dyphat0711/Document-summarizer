@@ -33,4 +33,14 @@ class HistoryModel {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deleteHistory($id) {
+        if (!$this->db) return false;
+
+        $query = "DELETE FROM summaries WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $stmt->execute() && $stmt->rowCount() > 0;
+    }
 }

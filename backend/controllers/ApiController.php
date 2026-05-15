@@ -22,6 +22,9 @@ class ApiController {
                 case 'get_history':
                     $this->getHistory();
                     break;
+                case 'delete_history':
+                    $this->deleteHistory();
+                    break;
                 default:
                     throw new Exception("Invalid action.");
             }
@@ -82,6 +85,27 @@ class ApiController {
         echo json_encode(array(
             "status" => "success",
             "data" => $records
+        ));
+    }
+
+    private function deleteHistory() {
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id = isset($input['id']) ? (int)$input['id'] : 0;
+
+        if ($id <= 0) {
+            throw new Exception("Invalid history record.");
+        }
+
+        $history = new HistoryModel();
+        $deleted = $history->deleteHistory($id);
+
+        if (!$deleted) {
+            throw new Exception("History record not found or could not be deleted.");
+        }
+
+        echo json_encode(array(
+            "status" => "success",
+            "message" => "History record deleted successfully."
         ));
     }
 }
