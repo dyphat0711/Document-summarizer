@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         summarizeBtn.disabled = count === 0;
     };
 
-    // HÀM PARSE MARKDOWN DUY NHẤT CHUẨN
+    // Parse Markdown
     const parseMarkdown = (text) => {
         if (!text) return '';
         let html = text;
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- XỬ LÝ UPLOAD FILE DUY NHẤT VÀ CHUẨN ---
+    // --- Handle File Upload ---
     fileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
             summaryOutput.classList.remove('hidden');
             
             if (data.status === 'success') {
-                // ĐÃ ĐẶT ĐÚNG VỊ TRÍ
                 summaryOutput.innerHTML = parseMarkdown(data.data);
             } else {
                 throw new Error(data.message);
@@ -267,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- NÚT COPY ĐÃ ĐƯỢC SỬA LỖI ---
+    // --- Copy Summary to Clipboard ---
     copyBtn.addEventListener('click', () => {
         const summaryText = summaryOutput.innerText; // Lấy text thô từ màn hình
         if(summaryText && !summaryOutput.querySelector('.empty-state')) {
